@@ -9,4 +9,4 @@ source venv/bin/activate
 # Step 3: Install packages from requirements.txt
 pip install -r requirements.txt
 
-# pip install "unsloth[cu121_torch220] @ git+https://github.com/unslothai/unsloth.git"
+pip install "unsloth[cu121_torch220] @ git+https://github.com/unslothai/unsloth.git"
