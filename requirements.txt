@@ -3,3 +3,5 @@ git+https://github.com/huggingface/transformers.git
 git+https://github.com/huggingface/accelerate.git
 datasets==2.16.1
 bitsandbytes 
+ipykernel #needed only when notebooks are used.
+wandb
