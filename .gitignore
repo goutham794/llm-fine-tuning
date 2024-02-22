@@ -2,3 +2,5 @@ venv/
 __pycache__/
 outputs/
 arcelik_segmentation_data_sample/
+wandb/
+.env

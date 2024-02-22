@@ -5,3 +5,4 @@ datasets==2.16.1
 bitsandbytes 
 ipykernel #needed only when notebooks are used.
 wandb
+python-dotenv
