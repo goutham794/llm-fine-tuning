@@ -51,8 +51,8 @@ class Lora_FineTuner:
         self.trainer = SFTTrainer(
             model = self.model,
             tokenizer = self.tokenizer,
-            train_dataset = self.dataset['train'].select(range(n_rows)),
-            eval_dataset = self.dataset['eval'].select(range(n_rows)),
+            train_dataset = self.dataset['train'].select(range(n_rows)) if n_rows is not None and n_rows > 0 else self.dataset['train'],
+            eval_dataset = self.dataset['eval'].select(range(n_rows)) if n_rows is not None and n_rows > 0 else self.dataset['eval'],
             dataset_text_field = "text",
             max_seq_length = self.max_seq_length,
             dataset_num_proc = 2,
