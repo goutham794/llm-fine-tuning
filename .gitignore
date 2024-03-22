@@ -4,3 +4,4 @@ outputs/
 arcelik_segmentation_data_sample/
 wandb/
 .env
+.ipynb_checkpoints/

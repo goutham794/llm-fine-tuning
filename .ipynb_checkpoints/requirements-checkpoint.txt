@@ -1,8 +1,0 @@
-pandas==2.1.4
-transformers==4.38.2
-git+https://github.com/huggingface/accelerate.git
-datasets==2.16.1
-bitsandbytes 
-ipykernel #needed only when notebooks are used.
-wandb
-python-dotenv
