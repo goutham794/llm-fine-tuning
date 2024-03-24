@@ -12,12 +12,13 @@ class Lora_FineTuner:
     
     def __init__(self, dataset, model_name: str, max_seq_length: int, 
                  load_in_4bit: bool = True, wandb_track: bool = True,
-                 lora_rank=16) -> None:
+                 lora_rank=16, rs_lora=False) -> None:
         self.model_name = model_name
         self.dataset = load_from_disk(dataset)
         self.max_seq_length = max_seq_length
         self.load_in_4bit = load_in_4bit,
         self.rank = lora_rank
+        self.rs_lora = rs_lora
         if wandb_track: self._setup_wandb()
         self._setup_model_and_tokenizer()
     
@@ -43,7 +44,7 @@ class Lora_FineTuner:
             bias = "none",    # Supports any, but = "none" is optimized
             use_gradient_checkpointing = True,
             random_state = 3407,
-            use_rslora = False,
+            use_rslora = self.rs_lora,
             loftq_config = None,
         )
     
