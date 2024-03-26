@@ -48,7 +48,8 @@ class Lora_FineTuner:
             loftq_config = None,
         )
     
-    def _setup_trainer(self, n_epochs, device_batch_size, n_rows, save_steps):
+    def _setup_trainer(self, n_epochs, device_batch_size, n_rows, save_steps,
+                      eval_steps):
         self.trainer = SFTTrainer(
             model = self.model,
             tokenizer = self.tokenizer,
@@ -70,7 +71,8 @@ class Lora_FineTuner:
                 logging_steps = 50,
                 optim = "adamw_8bit",
                 weight_decay = 0.01,
-                eval_steps=1000,
+                eval_steps=eval_steps,
+                evaluation_strategy='steps',
                 do_eval = True,
                 lr_scheduler_type = "linear",
                 seed = 42,
@@ -79,7 +81,7 @@ class Lora_FineTuner:
             ),
         )
     
-    def train(self, n_epochs, save_steps, resume, device_batch_size=8, n_rows = None):
+    def train(self, n_epochs, save_steps, eval_steps, resume, device_batch_size=8, n_rows = None):
         self._setup_trainer(n_epochs, device_batch_size=device_batch_size, 
-                            n_rows=n_rows, save_steps=save_steps)
+                            n_rows=n_rows, save_steps=save_steps, eval_steps=eval_steps)
         trainer_stats = self.trainer.train(resume_from_checkpoint = resume)
