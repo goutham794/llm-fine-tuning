@@ -5,6 +5,11 @@ from transformers import TrainingArguments
 import torch
 import wandb
 
+from callback import EarlyStoppingCallback
+
+# from torchmetrics.text.bleu import BLEUScore
+
+
 class Lora_FineTuner:
     """
     QLORA Fine-tuning using Unsloth, Huggingface Transformers.
@@ -21,11 +26,12 @@ class Lora_FineTuner:
         self.rs_lora = rs_lora
         if wandb_track: self._setup_wandb()
         self._setup_model_and_tokenizer()
+        # self.bleu = BLEUScore()
     
     def _setup_wandb(self):
         pass
-        
-    
+
+
     def _setup_model_and_tokenizer(self):
         model, self.tokenizer = FastLanguageModel.from_pretrained(
         model_name = self.model_name, 
@@ -59,8 +65,11 @@ class Lora_FineTuner:
             max_seq_length = self.max_seq_length,
             dataset_num_proc = 2,
             packing = False, # Can make training 5x faster for short sequences.
+            callbacks=[EarlyStoppingCallback(early_stopping_patience=3, early_stopping_threshold=0.05)],
+            # compute_metrics=self._compute_F1,
             args = TrainingArguments(
                 per_device_train_batch_size = device_batch_size,
+                per_device_eval_batch_size = 1,
                 gradient_accumulation_steps = 4,
                 save_steps=save_steps,
                 warmup_steps = 5,
@@ -85,3 +94,5 @@ class Lora_FineTuner:
         self._setup_trainer(n_epochs, device_batch_size=device_batch_size, 
                             n_rows=n_rows, save_steps=save_steps, eval_steps=eval_steps)
         trainer_stats = self.trainer.train(resume_from_checkpoint = resume)
+        final_metrics = self.finalize_metrics()
+        print(final_metrics)
