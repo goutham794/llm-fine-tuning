@@ -6,3 +6,4 @@ bitsandbytes
 ipykernel #needed only when notebooks are used.
 wandb
 python-dotenv
+toml

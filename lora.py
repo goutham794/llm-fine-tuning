@@ -26,7 +26,6 @@ class Lora_FineTuner:
         self.rs_lora = rs_lora
         if wandb_track: self._setup_wandb()
         self._setup_model_and_tokenizer()
-        # self.bleu = BLEUScore()
     
     def _setup_wandb(self):
         pass
@@ -69,7 +68,7 @@ class Lora_FineTuner:
             # compute_metrics=self._compute_F1,
             args = TrainingArguments(
                 per_device_train_batch_size = device_batch_size,
-                per_device_eval_batch_size = 1,
+                per_device_eval_batch_size = 2,
                 gradient_accumulation_steps = 4,
                 save_steps=save_steps,
                 warmup_steps = 5,
