@@ -1,3 +1,9 @@
+max_seq_length = 140
+dataset_path = "./data/it_training_data"
+load_in_4bit = true
+early_stopping_patience = 3
+early_stopping_threshold = 0.05
+
 [ModelArgs]
 r = 16 # Choose any number > 0 ! Suggested 8, 16, 32, 64, 128
 target_modules = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
@@ -5,7 +11,6 @@ lora_alpha = 16
 lora_dropout = 0 # Supports any, but = 0 is optimized
 bias = "none"    # Supports any, but = "none" is optimized
 use_gradient_checkpointing = true
-random_state = 42
 use_rslora = false
 
 [TrainingArguments]
@@ -22,7 +27,7 @@ logging_steps = 50
 optim = "adamw_8bit"
 weight_decay = 0.01
 eval_steps = 50
-evaluation_strategy = "steps"
+evaluation_strategy = "no" # 'no' or 'steps' or 'epoch'
 do_eval = true
 lr_scheduler_type = "linear"
 seed = 42
