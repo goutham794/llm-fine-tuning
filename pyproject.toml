@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "llm-fine-tuning"
+version = "0.1.0"
+description = "QLORA Fine-tuning"
+authors = ["Goutham"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+transformers = "^4.40.0"
+accelerate = {git = "https://github.com/huggingface/accelerate.git"}
+datasets = "^2.19.0"
+bitsandbytes = "^0.43.1"
+ipykernel = "^6.29.4"
+toml = "^0.10.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
